@@ -85,8 +85,6 @@ north_angle = st.sidebar.slider("North Building Angle (°):", min_value=0, max_v
 # 5. Core Astronomical & Spatiotemporal Logic
 # ==========================================
 # Define standard astronomical declinations
-# In Northern Hemisphere: Summer = +23.43, Winter = -23.43
-# In Southern Hemisphere: Summer = -23.43, Winter = +23.43 (Seasons swap)
 if lat < 0:
     delta_summer = -23.43   # Summer for South (December)
     delta_winter = 23.43    # Winter for South (June)
@@ -111,7 +109,6 @@ for hr in hours:
     # Summer Solstice Formula
     sin_alpha_s = (np.sin(lat_rad) * np.sin(np.radians(delta_summer)) + 
                    np.cos(lat_rad) * np.cos(np.radians(delta_summer)) * np.cos(h_rad))
-    # Capture mathematical limits
     sin_alpha_s = np.clip(sin_alpha_s, -1.0, 1.0)
     alpha_summer.append(max(0, np.degrees(np.arcsin(sin_alpha_s))))
     
@@ -166,7 +163,7 @@ st.pyplot(fig)
 # ==========================================
 # 7. Dynamic Environmental Health Report
 # ==========================================
-st.markdown(f"""
+report_html = f"""
 <div style="background-color: #f8f9fa; border-left: 5px solid #f1c40f; padding: 15px; border-radius: 4px; font-family: sans-serif;">
     <h3 style="color: #2c3e50; margin-top: 0; font-size: 16px;">🔬 Global Spatiotemporal & Environmental Health Diagnostic Report:</h3>
     <p style="font-size: 14px; color: #2c3e50;"><b>Current Evaluated Location:</b> <span style="color:#27ae60; font-weight:bold;">{place_name}</span> | <b>Target Latitude:</b> {lat:.2f}°N/S</p>
@@ -180,8 +177,6 @@ st.markdown(f"""
     <p style="font-size: 12px; color: #566573; line-height: 1.5;">
         💡 <b>Global Geography Field Note:</b> This system dynamically accounts for hemisphere flipping. If a negative latitude is typed or a Southern Hemisphere city (e.g., Sydney) is chosen, the engine automatically shifts the peak tracking vectors to the December Solstice to ensure mathematical precision.
     </p>
-</div>
-""", unsafe_allow_html=True)
 </div>
 """
 
